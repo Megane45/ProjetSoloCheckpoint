@@ -18,6 +18,20 @@ router.get("/items/:id", itemActions.read);
 // Route to add a new item
 router.post("/items", itemActions.add);
 
+const gamesActions = require("./controllers/gamesActions");
+
+router.get("/games", gamesActions.browse);
+
+router.post("/games/:id", gamesActions.join);
+
+router.post("/games", gamesActions.add);
+
+const userActions = require("./controllers/userActions");
+
+router.get("/users", userActions.browse);
+
+router.post("/login", userActions.login);
+
 /* ************************************************************************* */
 
 module.exports = router;

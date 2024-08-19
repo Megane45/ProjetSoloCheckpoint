@@ -1,0 +1,70 @@
+.matchmaking {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.matchmaking h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 2.5em;
+  margin-bottom: 1em;
+}
+
+table {
+  width: 80%;
+  background: rgba(255, 255, 255, 0.2);
+  border-collapse: collapse;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+table th,
+table td {
+  padding: 20px;
+  text-align: left;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+table thead {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+table tr {
+  transition: background 0.3s;
+}
+
+table tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #e68900;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #000000;
+}
+
+.matchmaking-wrapper {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 40px;
+  border-radius: 20px;
+  width: 60%;
+  max-width: 1000px;
+}

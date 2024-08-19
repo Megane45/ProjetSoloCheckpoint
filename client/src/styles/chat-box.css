@@ -1,0 +1,65 @@
+/* .chatbox {
+  width: 400px;
+  max-width: 90%;
+  border: 2px solid #3e3d37;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #f4f1e1, #e4dac0);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+}
+
+.message-list {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  border-bottom: 2px solid #3e3d37;
+  background: url("https://www.transparenttextures.com/patterns/old-moon.png");
+}
+
+.message {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  border: 1px solid #c3b091;
+  font-size: 16px;
+}
+
+.message-input {
+  display: flex;
+  padding: 15px;
+  background-color: #e4dac0;
+  border-top: 2px solid #3e3d37;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #3e3d37;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-family: "Cinzel", serif;
+  background-color: #f9f6e3;
+}
+
+.message-input button {
+  padding: 10px 20px;
+  border: 2px solid #3e3d37;
+  background-color: #6b8e23;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Cinzel", serif;
+}
+
+.message-input button:hover {
+  background-color: #556b2f;
+}
+
+.message-input input::placeholder {
+  color: #a9a9a9;
+  font-family: "Cinzel", serif;
+} */
