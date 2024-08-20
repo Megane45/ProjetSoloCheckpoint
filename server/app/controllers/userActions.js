@@ -30,15 +30,15 @@ const login = async (req, res, next) => {
     next(err);
   }
 };
-/** 
+
 // The A of BREAD - Add (Create) operation
 const create = async (req, res, next) => {
   // Extract the item data from the request body
-  const user = req.body;
+  const users = req.body;
 
   try {
     // Insert the item into the database
-    const insertId = await tables.user.create(user);
+    const insertId = await tables.user.create(users);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
@@ -47,9 +47,6 @@ const create = async (req, res, next) => {
     next(err);
   }
 };
-*/
-
-/** 
 // The E of BREAD - Edit (Update) operation
 // This operation is not yet implemented
 
@@ -68,7 +65,6 @@ const update = async (req, res, next) => {
     next(err);
   }
 };
-*/
 
 /** 
 // The D of BREAD - Destroy (Delete) operation
@@ -100,4 +96,6 @@ const destroy = async (req, res) => {
 module.exports = {
   browse,
   login,
+  create,
+  update,
 };

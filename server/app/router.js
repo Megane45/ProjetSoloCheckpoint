@@ -32,6 +32,12 @@ router.get("/users", userActions.browse);
 
 router.post("/login", userActions.login);
 
+router.post("/signup", userActions.create);
+
+const charactersActions = require("./controllers/charactersActions");
+
+router.get("/characters", charactersActions.browse);
+
 /* ************************************************************************* */
 
 module.exports = router;

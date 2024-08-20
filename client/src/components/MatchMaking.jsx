@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Importez useNavigate
 import connexion from "../services/connexion";
 import "../styles/match-making.css";
 
 function MatchMaking() {
   const [games, setGames] = useState([]);
+  const navigate = useNavigate(); // Créez une instance de navigate
 
   useEffect(() => {
     connexion
@@ -20,8 +22,9 @@ function MatchMaking() {
   const handleJoinGame = (id) => {
     connexion
       .post(`api/games/${id}`)
-      .then((response) => {
-        setGames(response.data);
+      .then(() => {
+        // Redirigez vers la nouvelle route
+        navigate(`/matchmaking/${id}`);
       })
       .catch((error) => {
         console.error("Error joining the game:", error);

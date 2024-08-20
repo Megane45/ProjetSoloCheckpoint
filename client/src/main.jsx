@@ -10,6 +10,7 @@ import MatchMaking from "./components/MatchMaking";
 import Login from "./components/Login";
 import Enter from "./components/Enter";
 import Signup from "./components/Signup";
+import CharacterForm from "./components/CharacterForm";
 import "./App.css";
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/matchmaking",
         element: <MatchMaking />,
+      },
+      {
+        path: "/matchmaking/:id",
+        element: <CharacterForm />,
       },
     ],
   },

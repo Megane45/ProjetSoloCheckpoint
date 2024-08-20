@@ -1,0 +1,94 @@
+/* Conteneur principal pour le formulaire avec image de fond */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 60px; /* Assure une marge au sommet pour éviter que le formulaire ne soit caché par la navbar */
+}
+
+/* Boîte de formulaire avec effet de verre dépoli */
+.signup-box {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  ); /* Ajuste la transparence du fond si nécessaire */
+  padding: 20px; /* Réduit le padding */
+  border-radius: 10px; /* Réduit le rayon de bordure */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Réduit l'ombre */
+  backdrop-filter: blur(8px); /* Réduit l'effet de flou */
+  text-align: center;
+  max-width: 90%; /* Réduit la largeur maximale */
+  width: 400px; /* Largeur fixe pour les petits écrans */
+}
+
+/* Titre du formulaire */
+.signup-title {
+  font-size: 1.5rem; /* Réduit la taille de la police */
+  color: #000000;
+  margin-bottom: 15px; /* Réduit la marge inférieure */
+}
+
+/* Groupes d'inputs */
+.form-input-group {
+  margin-bottom: 10px; /* Réduit la marge inférieure */
+  text-align: left;
+}
+
+/* Label des inputs */
+.form-input-group label {
+  color: #000000;
+  font-size: 1rem; /* Réduit la taille de la police */
+}
+
+/* Styles des inputs */
+.form-input-group input {
+  width: 100%;
+  padding: 8px; /* Réduit le padding */
+  margin-top: 3px; /* Réduit la marge supérieure */
+  font-size: 0.9rem; /* Réduit la taille de la police */
+  border-radius: 4px; /* Réduit le rayon de bordure */
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Styles pour le bouton de soumission */
+.register-button .button {
+  width: 100%;
+  padding: 10px; /* Réduit le padding */
+  border: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 1rem; /* Réduit la taille de la police */
+  border-radius: 4px; /* Réduit le rayon de bordure */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Effet de survol pour le bouton */
+.register-button .button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Messages d'erreur et de succès */
+.error-message,
+.success-message {
+  font-size: 0.9rem; /* Réduit la taille de la police */
+  margin-top: 8px; /* Réduit la marge supérieure */
+}
+
+/* Message d'erreur */
+.error-message {
+  color: red;
+}
+
+/* Message de succès */
+.success-message {
+  color: green;
+}

@@ -7,21 +7,18 @@ class UserRepository extends AbstractRepository {
     super({ table: "users" });
   }
 
-  /** 
   // The C of CRUD - Create operation
 
-  async create(user) {
+  async create(users) {
     // Execute the SQL INSERT query to add a new user to the "user" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (pseudo, email) values (?, ?)`,
-      [user.pseudo, user.email]
+      `insert into ${this.table} (pseudo, email, password) values (?, ?, ?)`,
+      [users.pseudo, users.email, users.password]
     );
 
     // Return the ID of the newly inserted user
     return result.insertId;
   }
-
-*/
 
   // The Rs of CRUD - Read operations
   /** 
