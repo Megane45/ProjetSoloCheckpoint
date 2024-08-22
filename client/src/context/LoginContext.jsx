@@ -5,7 +5,7 @@ export const LoginContext = createContext();
 export const useLogin = () => useContext(LoginContext);
 
 export function LoginProvider({ children }) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState([]);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values

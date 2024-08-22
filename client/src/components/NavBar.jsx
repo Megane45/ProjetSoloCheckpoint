@@ -1,29 +1,28 @@
-import { useState } from "react";
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/navbar.css";
+import Logo from "../assets/images/Profil.png";
 
 function Navbar() {
   const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-  // Vérifier l'état de connexion depuis localStorage
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    () => localStorage.getItem("isLoggedIn") === "true"
-  );
-
-  const handleLoginClick = () => {
+  const handleLoginOrLogOutClick = () => {
     if (isLoggedIn) {
-      // Déconnexion
-      setIsLoggedIn(false);
-      localStorage.setItem("isLoggedIn", "false"); // Mettre à jour localStorage
+      localStorage.setItem("isLoggedIn", "false");
       navigate("/");
     } else {
-      // Connexion
       navigate("/login");
     }
   };
 
   const handleSignupClick = () => {
     navigate("/signup");
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profil");
   };
 
   return (
@@ -41,11 +40,19 @@ function Navbar() {
         </button>
         <button
           type="button"
-          onClick={handleLoginClick}
+          onClick={handleLoginOrLogOutClick}
           className="navbar-button"
         >
           {isLoggedIn ? "Déconnexion" : "Connexion"}
         </button>
+        {isLoggedIn && (
+          <img
+            src={Logo}
+            alt="Profil"
+            className="profile-logo"
+            onClick={handleProfileClick}
+          />
+        )}
       </div>
     </nav>
   );

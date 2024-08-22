@@ -10,6 +10,7 @@
   align-items: center;
   padding: 0 40px;
   z-index: 1000; /* S'assure que la navbar soit toujours visible */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Légère ombre pour détacher la navbar du contenu */
 }
 
 /* Titre de la barre de navigation */
@@ -21,17 +22,63 @@
   text-decoration: none;
 }
 
-/* Bouton de connexion/déconnexion */
+/* Boutons de la barre de navigation */
 .navbar-button {
   background-color: transparent;
   color: white;
   padding: 10px 20px;
+  border: 1px solid transparent;
   border-radius: 5px;
   cursor: pointer;
   text-transform: uppercase;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .navbar-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 1);
+}
+
+.navbar-button:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.8); /* Bordure visible sur focus */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Effet de focus */
+}
+
+/* Style pour le logo de profil */
+.profile-logo {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Rendre l'image ronde */
+  margin-left: 20px;
+  transition: transform 0.3s ease;
+}
+
+.profile-logo:hover {
+  transform: scale(1.1); /* Agrandir légèrement au survol */
+}
+
+/* Responsivité pour écrans plus petits */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+    height: 70px;
+  }
+
+  .navbar-title {
+    font-size: 22px;
+  }
+
+  .navbar-button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+
+  .profile-logo {
+    width: 35px;
+    height: 35px;
+  }
 }

@@ -28,6 +28,19 @@ const create = async (req, res, next) => {
   }
 };
 
+const readCharacterForUser = async (req, res) => {
+  try {
+    // Fetch all items from the database
+    const user = await tables.games.readCharacterForUser(req.params.id);
+
+    // Respond with the items in JSON format
+    res.status(200).json(user);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    res.status(500).json(err);
+  }
+};
+
 const read = async (req, res) => {
   try {
     const character = await tables.characters.readById(req.params.id);
@@ -81,5 +94,6 @@ module.exports = {
   create,
   read,
   update,
+  readCharacterForUser,
   delete: deleteCharacter,
 };

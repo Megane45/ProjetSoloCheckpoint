@@ -26,9 +26,15 @@ router.post("/games/join/:id", gamesActions.join);
 
 router.post("/games", gamesActions.create);
 
+router.get("/profil/games/:id", gamesActions.readGameForUser);
+
+router.delete("/games/:id", gamesActions.destroy);
+
 const userActions = require("./controllers/userActions");
 
 router.get("/users", userActions.browse);
+
+router.get("/profil/user/:id", userActions.read);
 
 router.post("/login", userActions.login);
 
@@ -42,6 +48,7 @@ router.post("/characters", charactersActions.create);
 
 router.get("/characters/:id", charactersActions.read);
 
+router.get("/profil/character/:id", charactersActions.readCharacterForUser);
 // router.put("/characters/:id", charactersActions.update);
 
 router.delete("/characters/:id", charactersActions.delete);

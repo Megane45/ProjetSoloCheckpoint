@@ -27,6 +27,7 @@ function Login() {
     try {
       const user = await connexion.post("/api/login", connect);
       setUser(user.data);
+      localStorage.setItem("isLoggedIn", "true");
       navigate("/");
     } catch (error) {
       console.error("There was an error connecting the user!", error);

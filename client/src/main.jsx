@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import Enter from "./components/Enter";
 import Signup from "./components/Signup";
 import CharacterForm from "./components/CharacterForm";
+import Profil from "./components/Profil";
 import "./App.css";
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/profil",
+    element: <Profil />,
   },
 ]);
 

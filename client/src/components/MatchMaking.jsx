@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import connexion from "../services/connexion";
+import { useLogin } from "../context/LoginContext";
 import "../styles/match-making.css";
 
 Modal.setAppElement("#root");
@@ -11,6 +12,7 @@ function MatchMaking() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newGameTitle, setNewGameTitle] = useState("");
   const [newGameMaxPlayers, setNewGameMaxPlayers] = useState(2);
+  const { user } = useLogin();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +30,6 @@ function MatchMaking() {
     connexion
       .post(`api/games/join/${id}`)
       .then(() => {
-        // Mettez à jour le jeu localement
         setGames((prevGames) =>
           prevGames.map((game) =>
             game.id === id
@@ -44,11 +45,18 @@ function MatchMaking() {
   };
 
   const handleCreateGame = () => {
+    if (!user.userId) {
+      alert("You must be logged in to create a game.");
+      return;
+    }
+
     connexion
       .post("api/games", {
         title: newGameTitle,
-        player_ingame: 0,
+        player_ingame: 1, // Include the creator as a player
         player_max: newGameMaxPlayers,
+        owner: user.userId,
+        // Assign the user ID as the owner of the game
       })
       .then(() => connexion.get("api/games"))
       .then((response) => {

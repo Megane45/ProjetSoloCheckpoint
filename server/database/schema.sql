@@ -6,15 +6,17 @@ CREATE TABLE users (
   pseudo VARCHAR(255) NOT NULL UNIQUE,
   email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
-  role VARCHAR(255) NOT NULL DEFAULT 'player'
-);
+  role VARCHAR(255) NOT NULL DEFAULT 'player',
+  profilImage BLOB
+  );
 
 -- Insertion des données dans la table 'users'
-INSERT INTO users (pseudo, email, password, role) VALUES
-('john_doe', 'john@example.com', 'password123', 'player'),
-('jane_doe', 'jane@example.com', 'password456', 'admin'),
-('alice', 'alice@example.com', 'password789', 'game master'),
-('bob', 'bob@example.com', 'password101', 'player');
+INSERT INTO users (pseudo, email, password, role, profilimage) VALUES
+('john_doe', 'john@example.com', 'player', 'player', '/images/profildeafault.jpg'),
+('jane_doe', 'jane@example.com', 'password456', 'admin','/images/profildeafault.jpg' ),
+('alice', 'alice@example.com', 'password789', 'game master','/images/profildeafault.jpg'),
+('bob', 'bob@example.com', 'password101', 'player','/images/profildeafault.jpg');
+
 
 -- Recréation de la table 'games'
 DROP TABLE IF EXISTS games;
@@ -24,7 +26,9 @@ CREATE TABLE games (
   title VARCHAR(255) NOT NULL,
   player_ingame INTEGER NOT NULL,
   player_max INTEGER NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  description TEXT,
+  owner INT
 );
 
 -- Insertion des données dans la table 'games'
@@ -47,7 +51,8 @@ CREATE TABLE characters (
   stat_charisme INT,
   pv VARCHAR(255),
   mana VARCHAR(255),
-  status VARCHAR(255) DEFAULT 'Healthy'
+  status VARCHAR(255) DEFAULT 'Healthy',
+  users_id INT
 );
 
 -- Insertion des données dans la table 'characters'
@@ -75,22 +80,10 @@ INSERT INTO spell (character_id, spell_title, spell_description) VALUES
 (3, 'Arrow Shot', 'Shoots a precise arrow.'),
 (4, 'Hammer Smash', 'Smashes the ground with a mighty hammer.');
 
--- Recréation de la table 'players'
-DROP TABLE IF EXISTS players;
+ALTER TABLE characters
+ADD CONSTRAINT fk_users
+FOREIGN KEY (users_id) REFERENCES users(id);
 
-CREATE TABLE players (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  character_id INT NOT NULL,
-  pseudo VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (character_id) REFERENCES characters(id)
-);
-
--- Insertion des données dans la table 'players'
-INSERT INTO players (user_id, character_id, pseudo, created_at) VALUES
-(1, 1, 'JohnTheWarrior', '2024-08-19 10:05:00'),
-(2, 2, 'JaneTheMage', '2024-08-18 14:35:00'),
-(3, 3, 'AliceTheArcher', '2024-08-17 09:20:00'),
-(4, 4, 'BobTheBerserker', '2024-08-16 19:50:00');
+ALTER TABLE games
+ADD CONSTRAINT fk_owner
+FOREIGN KEY (owner) REFERENCES users(id);

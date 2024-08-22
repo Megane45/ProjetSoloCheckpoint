@@ -27,6 +27,14 @@ class CharactersRepository extends AbstractRepository {
     return rows[0];
   }
 
+  async readCharacterForUser(user) {
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} WHERE users_id  = ?`,
+      [user]
+    );
+    return rows;
+  }
+
   async create(character) {
     const [result] = await this.database.query(
       `insert into ${this.table} (name, race, stat_force,stat_agilite,stat_sagesse,stat_charisme,pv,mana,status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,

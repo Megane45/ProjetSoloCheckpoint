@@ -1,9 +1,11 @@
 import { useState } from "react";
 import connexion from "../services/connexion";
+// import { useLogin } from "../context/LoginContext";
 import "../styles/character-form.css";
 import DiceSet from "./Dices";
 
 function CharacterForm() {
+  // const { user } = useLogin();
   const [character, setCharacter] = useState({
     stats: {
       stat_force: 0,
