@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importez useNavigate
+import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
 import connexion from "../services/connexion";
 import "../styles/match-making.css";
 
+Modal.setAppElement("#root");
+
 function MatchMaking() {
   const [games, setGames] = useState([]);
-  const navigate = useNavigate(); // Créez une instance de navigate
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newGameTitle, setNewGameTitle] = useState("");
+  const [newGameMaxPlayers, setNewGameMaxPlayers] = useState(2);
+  const navigate = useNavigate();
 
   useEffect(() => {
     connexion
@@ -18,12 +24,18 @@ function MatchMaking() {
       });
   }, []);
 
-  // Fonction pour rejoindre un jeu
   const handleJoinGame = (id) => {
     connexion
-      .post(`api/games/${id}`)
+      .post(`api/games/join/${id}`)
       .then(() => {
-        // Redirigez vers la nouvelle route
+        // Mettez à jour le jeu localement
+        setGames((prevGames) =>
+          prevGames.map((game) =>
+            game.id === id
+              ? { ...game, player_ingame: game.player_ingame + 1 }
+              : game
+          )
+        );
         navigate(`/matchmaking/${id}`);
       })
       .catch((error) => {
@@ -31,9 +43,33 @@ function MatchMaking() {
       });
   };
 
+  const handleCreateGame = () => {
+    connexion
+      .post("api/games", {
+        title: newGameTitle,
+        player_ingame: 0,
+        player_max: newGameMaxPlayers,
+      })
+      .then(() => connexion.get("api/games"))
+      .then((response) => {
+        setGames(response.data);
+        setIsModalOpen(false);
+        setNewGameTitle("");
+        setNewGameMaxPlayers(2);
+      })
+      .catch((error) => {
+        console.error("Error creating the game:", error);
+      });
+  };
+
   return (
     <div className="matchmaking">
-      <h1>Matchmaking</h1>
+      <div className="marge-button">
+        <h1>Matchmaking</h1>
+        <button type="button" onClick={() => setIsModalOpen(true)}>
+          Create New Game
+        </button>
+      </div>
       {Array.isArray(games) && games.length > 0 ? (
         <table>
           <thead>
@@ -56,7 +92,7 @@ function MatchMaking() {
                     onClick={() => handleJoinGame(game.id)}
                     disabled={game.player_ingame >= game.player_max}
                   >
-                    Rejoindre
+                    Join
                   </button>
                 </td>
               </tr>
@@ -66,6 +102,49 @@ function MatchMaking() {
       ) : (
         <p>No games available</p>
       )}
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="Create New Game"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>Create New Game</h2>
+        <form>
+          <label>
+            Title:
+            <input
+              type="text"
+              value={newGameTitle}
+              onChange={(e) => setNewGameTitle(e.target.value)}
+            />
+          </label>
+          <label>
+            Max Players:
+            <input
+              type="number"
+              value={newGameMaxPlayers}
+              onChange={(e) => setNewGameMaxPlayers(Number(e.target.value))}
+              min="2"
+            />
+          </label>
+          <button
+            type="button"
+            onClick={handleCreateGame}
+            disabled={!newGameTitle || newGameMaxPlayers < 2}
+          >
+            Create Game
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsModalOpen(false)}
+            className="close"
+          >
+            Close
+          </button>
+        </form>
+      </Modal>
     </div>
   );
 }

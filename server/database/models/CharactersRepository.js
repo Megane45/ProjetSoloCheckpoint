@@ -8,12 +8,50 @@ class CharactersRepository extends AbstractRepository {
   }
 
   async readAll() {
-    // Execute the SQL SELECT query to retrieve all users from the "user" table
+    try {
+      const [rows] = await this.database.query(
+        `SELECT id, name, race, stat_force, stat_agilite, stat_sagesse, stat_charisme, pv, mana, status FROM ${this.table}`
+      );
+      return rows;
+    } catch (err) {
+      console.error("Erreur lors de la récupération des personnages:", err);
+      throw new Error("Erreur lors de la récupération des personnages");
+    }
+  }
+
+  async readById(id) {
     const [rows] = await this.database.query(
-      `select id, name, race, stat_force,stat_agilite,stat_sagesse,stat_charisme,pv,mana,status from ${this.table}`
+      `SELECT * FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
+    return rows[0];
+  }
+
+  async create(character) {
+    const [result] = await this.database.query(
+      `insert into ${this.table} (name, race, stat_force,stat_agilite,stat_sagesse,stat_charisme,pv,mana,status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        character.name,
+        character.race,
+        character.stats.stat_force,
+        character.stats.stat_agilite,
+        character.stats.stat_sagesse,
+        character.stats.stat_charisme,
+        character.pv,
+        character.mana,
+        character.status,
+      ]
     );
 
-    // Return the array of users
+    // Return the ID of the newly inserted user
+    return result.insertId;
+  }
+
+  async delete(characterID) {
+    const [rows] = await this.database.query(
+      `DELETE FROM ${this.table} WHERE id=?`,
+      [characterID]
+    );
     return rows;
   }
 }

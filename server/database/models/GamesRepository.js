@@ -18,6 +18,14 @@ class GamesRepository extends AbstractRepository {
     }
   }
 
+  async create(game) {
+    const [result] = await this.database.query(
+      `INSERT INTO ${this.table} (title, player_ingame, player_max) VALUES (?, ?, ?)`,
+      [game.title, game.player_ingame, game.player_max]
+    );
+    return result.insertId;
+  }
+
   // Lire un jeu par ID
   async readById(id) {
     const [rows] = await this.database.query(

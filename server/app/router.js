@@ -22,9 +22,9 @@ const gamesActions = require("./controllers/gamesActions");
 
 router.get("/games", gamesActions.browse);
 
-router.post("/games/:id", gamesActions.join);
+router.post("/games/join/:id", gamesActions.join);
 
-router.post("/games", gamesActions.add);
+router.post("/games", gamesActions.create);
 
 const userActions = require("./controllers/userActions");
 
@@ -37,6 +37,14 @@ router.post("/signup", userActions.create);
 const charactersActions = require("./controllers/charactersActions");
 
 router.get("/characters", charactersActions.browse);
+
+router.post("/characters", charactersActions.create);
+
+router.get("/characters/:id", charactersActions.read);
+
+// router.put("/characters/:id", charactersActions.update);
+
+router.delete("/characters/:id", charactersActions.delete);
 
 /* ************************************************************************* */
 

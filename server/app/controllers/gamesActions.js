@@ -35,24 +35,21 @@ const join = async (req, res, next) => {
 // This operation is not yet implemented
 
 // The A of BREAD - Add (Create) operation
-const add = async (req, res, next) => {
-  // Extract the item data from the request body
-  const game = req.body;
-
+const create = async (req, res, next) => {
   try {
-    // Insert the item into the database
-    const insertId = await tables.query("INSERT INTO games(title) VALUES (?)", [
-      game.title,
-    ]);
+    // Extract the item data from the request body
+    const games = req.body;
 
-    // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ insertId });
+    // Create a new character entry in the database
+    await tables.games.create(games);
+
+    // Respond with HTTP 201 (Created) since the creation was successful
+    res.sendStatus(201);
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
   }
 };
-
 // The D of BREAD - Destroy (Delete) operation
 // This operation is not yet implemented
 
@@ -61,6 +58,6 @@ module.exports = {
   browse,
   join,
   // edit,
-  add,
+  create,
   // destroy,
 };

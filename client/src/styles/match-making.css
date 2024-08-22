@@ -3,6 +3,8 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
 }
 
 .matchmaking h1 {
@@ -67,4 +69,92 @@ button:hover:not(:disabled) {
   border-radius: 20px;
   width: 60%;
   max-width: 1000px;
+}
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Styles pour l'overlay (arrière-plan du modal) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(
+    0,
+    0,
+    0,
+    0.4
+  ); /* Couleur d'overlay avec moins de transparence */
+  z-index: 999;
+}
+
+/* Styles pour le formulaire à l'intérieur du modal */
+.modal form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Styles pour les labels */
+.modal label {
+  margin-bottom: 8px; /* Réduit la marge pour une meilleure alignement */
+  font-weight: bold;
+}
+
+/* Styles pour les inputs */
+.modal input {
+  width: 100%; /* Occupe toute la largeur disponible */
+  box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 15px; /* Marge inférieure pour espacer les champs */
+}
+
+/* Styles pour les boutons */
+.modal button {
+  width: 100%; /* Occupe toute la largeur disponible */
+  box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur */
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #e68900;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px; /* Marge inférieure pour espacer les boutons */
+}
+
+.modal button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.modal button.close {
+  background-color: #6c757d;
+  margin-left: 0; /* Enlève la marge à gauche pour le bouton de fermeture */
+}
+
+/* Styles pour le conteneur des boutons */
+.marge-button {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 3rem;
 }

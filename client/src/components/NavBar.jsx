@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/navbar.css";
 
 function Navbar() {
@@ -28,7 +28,9 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <h1 className="navbar-title">Batailles Et Beignets</h1>
+      <Link to="/" className="navbar-title">
+        Batailles Et Beignets
+      </Link>
       <div className="navbar-buttons">
         <button
           type="button"
