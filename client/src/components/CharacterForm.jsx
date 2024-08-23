@@ -1,11 +1,11 @@
 import { useState } from "react";
 import connexion from "../services/connexion";
-// import { useLogin } from "../context/LoginContext";
+import { useLogin } from "../context/LoginContext";
 import "../styles/character-form.css";
 import DiceSet from "./Dices";
 
 function CharacterForm() {
-  // const { user } = useLogin();
+  const { user } = useLogin();
   const [character, setCharacter] = useState({
     stats: {
       stat_force: 0,
@@ -60,9 +60,12 @@ function CharacterForm() {
       setError("Veuillez remplir tous les champs obligatoires.");
       return;
     }
-
+    const characterToSubmit = {
+      ...character,
+      user_id: user.userId,
+    };
     try {
-      await connexion.post("api/characters", character);
+      await connexion.post("api/characters", characterToSubmit);
 
       setSuccess("Personnage enregistré avec succès !");
       setError(null);

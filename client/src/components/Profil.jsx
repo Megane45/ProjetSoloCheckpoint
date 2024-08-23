@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import connexion from "../services/connexion";
 import { useLogin } from "../context/LoginContext";
+import Modal from "./modal";
 import "../styles/profil.css";
 
 function Profil() {
@@ -9,15 +10,11 @@ function Profil() {
     pseudo: "",
     email: "",
   });
-  const [gameProfil, setGameProfil] = useState({
-    title: "",
-    created_at: "",
-  });
-  const [characterProfil, setCharacterProfil] = useState({
-    name: "",
-    race: "",
-    status: "",
-  });
+  const [gameProfil, setGameProfil] = useState([]);
+  const [characterProfil, setCharacterProfil] = useState([]);
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   useEffect(() => {
     const id = user.userId;
@@ -38,16 +35,16 @@ function Profil() {
         console.error("Erreur lors de la récupération du profil :", error);
       });
     connexion
-      .get(`api/profil/character/${1}`)
+      .get(`api/profil/character/${id}`)
       .then((response) => {
         setCharacterProfil(response.data);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération du profil :", error);
       });
-  }, []);
+  }, [user.userId]);
 
-  const handleDelete = (gameID) => {
+  const handleDeleteGame = (gameID) => {
     connexion
       .delete(`api/games/${gameID}`)
       .then(() => {
@@ -60,6 +57,33 @@ function Profil() {
       });
   };
 
+  const handleDeleteCharacter = (characterID) => {
+    connexion
+      .delete(`api/characters/${characterID}`)
+      .then(() => {
+        setCharacterProfil((prevCharacters) =>
+          prevCharacters.filter((character) => character.id !== characterID)
+        );
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la suppression du personnage :", error);
+      });
+  };
+
+  const handleOpenModal = (type, id) => {
+    setModalData({ type, id });
+    setShowModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (modalData.type === "game") {
+      handleDeleteGame(modalData.id);
+    } else if (modalData.type === "character") {
+      handleDeleteCharacter(modalData.id);
+    }
+    setShowModal(false);
+  };
+
   return (
     <div className="profil-container">
       <h1>Profil de {userProfil.pseudo}</h1>
@@ -70,23 +94,30 @@ function Profil() {
         {characterProfil.length > 0 ? (
           characterProfil.map((character) => (
             <li key={character.id}>
-              {character.name}
-              {character.race}
-              {character.status}
+              {character.name} - {character.race} - {character.status}
+              <button
+                type="button"
+                onClick={() => handleOpenModal("character", character.id)}
+              >
+                Supprimer
+              </button>
             </li>
           ))
         ) : (
           <p>Aucun personnage créé</p>
         )}
       </ul>
+
       <h2>Parties créées</h2>
       <ul>
         {gameProfil.length > 0 ? (
           gameProfil.map((game) => (
             <li key={game.id}>
-              {game.title}
-              {game.created_at}
-              <button type="button" onClick={() => handleDelete(game.id)}>
+              {game.title} - {game.created_at}
+              <button
+                type="button"
+                onClick={() => handleOpenModal("game", game.id)}
+              >
                 Supprimer
               </button>
             </li>
@@ -95,6 +126,14 @@ function Profil() {
           <p>Aucune partie créée</p>
         )}
       </ul>
+
+      {showModal && (
+        <Modal
+          message="Êtes-vous sûr de vouloir supprimer cet élément ?"
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 }

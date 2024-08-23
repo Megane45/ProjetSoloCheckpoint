@@ -29,7 +29,7 @@ class CharactersRepository extends AbstractRepository {
 
   async readCharacterForUser(user) {
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE users_id  = ?`,
+      `SELECT * FROM ${this.table} WHERE user_id  = ?`,
       [user]
     );
     return rows;
@@ -37,7 +37,7 @@ class CharactersRepository extends AbstractRepository {
 
   async create(character) {
     const [result] = await this.database.query(
-      `insert into ${this.table} (name, race, stat_force,stat_agilite,stat_sagesse,stat_charisme,pv,mana,status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (name, race, stat_force,stat_agilite,stat_sagesse,stat_charisme,pv,mana,status, user_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         character.name,
         character.race,
@@ -48,6 +48,7 @@ class CharactersRepository extends AbstractRepository {
         character.pv,
         character.mana,
         character.status,
+        character.user_id,
       ]
     );
 
@@ -55,7 +56,7 @@ class CharactersRepository extends AbstractRepository {
     return result.insertId;
   }
 
-  async delete(characterID) {
+  async deleteCharacters(characterID) {
     const [rows] = await this.database.query(
       `DELETE FROM ${this.table} WHERE id=?`,
       [characterID]

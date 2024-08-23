@@ -46,6 +46,7 @@ function MatchMaking() {
 
   const handleCreateGame = () => {
     if (!user.userId) {
+      // eslint-disable-next-line no-alert
       alert("You must be logged in to create a game.");
       return;
     }

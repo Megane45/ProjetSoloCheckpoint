@@ -52,7 +52,7 @@ CREATE TABLE characters (
   pv VARCHAR(255),
   mana VARCHAR(255),
   status VARCHAR(255) DEFAULT 'Healthy',
-  users_id INT
+  user_id INT
 );
 
 -- Insertion des données dans la table 'characters'
@@ -80,9 +80,9 @@ INSERT INTO spell (character_id, spell_title, spell_description) VALUES
 (3, 'Arrow Shot', 'Shoots a precise arrow.'),
 (4, 'Hammer Smash', 'Smashes the ground with a mighty hammer.');
 
-ALTER TABLE characters
-ADD CONSTRAINT fk_users
-FOREIGN KEY (users_id) REFERENCES users(id);
+ALTER TABLE characters --modifie la table
+ADD CONSTRAINT fk_user --ajoute une contrainte portant le nom: Fk_user pour FOREIGN KEY
+FOREIGN KEY (user_id) REFERENCES users(id); --definie la FK qui lie la colone user_id de la table characters a ma colonne id de ma table users
 
 ALTER TABLE games
 ADD CONSTRAINT fk_owner

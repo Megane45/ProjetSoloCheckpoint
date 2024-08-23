@@ -31,7 +31,7 @@ const create = async (req, res, next) => {
 const readCharacterForUser = async (req, res) => {
   try {
     // Fetch all items from the database
-    const user = await tables.games.readCharacterForUser(req.params.id);
+    const user = await tables.characters.readCharacterForUser(req.params.id);
 
     // Respond with the items in JSON format
     res.status(200).json(user);
@@ -74,18 +74,24 @@ const update = async (req, res) => {
   }
 };
 
-const deleteCharacter = async (req, res) => {
+const deleteCharacters = async (req, res) => {
   try {
-    const deletedCharacter = await tables.characters.delete(req.params.id);
-    if (!deletedCharacter.affectedRows) {
-      res.status(404).json({ message: "Personnage non trouvé" });
+    // Fetch the userId from the request parameters
+    const characterID = req.params.id;
+
+    // Attempt to delete the user from the database
+    const rows = await tables.characters.deleteCharacters(characterID);
+
+    // Check if any rows were affected (meaning the user was deleted)
+    if (rows.affectedRows > 0) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404);
     }
-    res.status(200).json({ message: "Personnage supprimé avec succès" });
   } catch (err) {
-    res.status(500).json({
-      message: "Erreur lors de la suppression du personnage",
-      error: err.message,
-    });
+    // Pass any errors to the error-handling middleware
+    console.error("Error deleting character:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -95,5 +101,5 @@ module.exports = {
   read,
   update,
   readCharacterForUser,
-  delete: deleteCharacter,
+  deleteCharacters,
 };

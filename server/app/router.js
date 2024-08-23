@@ -51,7 +51,7 @@ router.get("/characters/:id", charactersActions.read);
 router.get("/profil/character/:id", charactersActions.readCharacterForUser);
 // router.put("/characters/:id", charactersActions.update);
 
-router.delete("/characters/:id", charactersActions.delete);
+router.delete("/characters/:id", charactersActions.deleteCharacters);
 
 /* ************************************************************************* */
 
