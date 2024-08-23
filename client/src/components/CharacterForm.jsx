@@ -4,6 +4,7 @@ import { useLogin } from "../context/LoginContext";
 import "../styles/character-form.css";
 import DiceSet from "./Dices";
 import Socketio from "./Socketio";
+import Spells from "./Spells";
 
 function CharacterForm() {
   const { user } = useLogin();
@@ -19,6 +20,7 @@ function CharacterForm() {
     name: "",
     race: "",
     status: "",
+    createdCharacterID: -1,
   });
 
   const [pointsLeft, setPointsLeft] = useState(20);
@@ -66,8 +68,9 @@ function CharacterForm() {
       user_id: user.userId,
     };
     try {
-      await connexion.post("api/characters", characterToSubmit);
-
+      await connexion
+        .post("api/characters", characterToSubmit)
+        .then((response) => setCharacter(response.data));
       setSuccess("Personnage enregistré avec succès !");
       setError(null);
     } catch (err) {
@@ -185,6 +188,9 @@ function CharacterForm() {
       </div>
       <DiceSet />;
       <Socketio />
+      {character.createdCharacterID > -1 && (
+        <Spells characterId={character.createdCharacterID} />
+      )}
     </div>
   );
 }

@@ -49,9 +49,18 @@ router.post("/characters", charactersActions.create);
 router.get("/characters/:id", charactersActions.read);
 
 router.get("/profil/character/:id", charactersActions.readCharacterForUser);
+
 // router.put("/characters/:id", charactersActions.update);
 
 router.delete("/characters/:id", charactersActions.deleteCharacters);
+
+const spellsActions = require("./controllers/spellsActions");
+
+router.get("/spells", spellsActions.browse);
+
+router.post("/addspells", spellsActions.create);
+
+router.get("/spells/:id", spellsActions.read);
 
 /* ************************************************************************* */
 

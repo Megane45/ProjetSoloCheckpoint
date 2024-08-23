@@ -3,12 +3,14 @@
 const GamesRepository = require("./models/GamesRepository");
 const UserRepository = require("./models/UserRepository");
 const CharactersRepository = require("./models/CharactersRepository");
+const SpellsRepository = require("./models/spellsRepository");
 
 // Create an empty object to hold data repositories for different tables
 const tables = {
   games: new GamesRepository(),
   user: new UserRepository(),
   characters: new CharactersRepository(),
+  spells: new SpellsRepository(),
 };
 
 /* ************************************************************************* */

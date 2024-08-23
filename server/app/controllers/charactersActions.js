@@ -18,10 +18,10 @@ const create = async (req, res, next) => {
     const characters = req.body;
 
     // Create a new character entry in the database
-    await tables.characters.create(characters);
-
+    const createdCharacterID = await tables.characters.create(characters);
+    const fusion = { ...characters, createdCharacterID };
     // Respond with HTTP 201 (Created) since the creation was successful
-    res.sendStatus(201);
+    res.status(201).json(fusion);
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
