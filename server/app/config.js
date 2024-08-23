@@ -1,11 +1,46 @@
+/* eslint-disable no-console */
 // Load the express module to create a web application
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
 
+const http = require("http");
+
 const app = express();
 
+const server = http.createServer(app);
 // Configure it
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+const port = 5050;
+
+io.on("connection", (socket) => {
+  console.log("New user : ", socket.id);
+
+  socket.on("sendMessage", (data) => {
+    io.emit("newMessage", data);
+  });
+  socket.on("sendDice", (data) => {
+    io.emit("newDice", data);
+  });
+
+  // disconnect
+  socket.on("disconnect", () => {
+    console.log("user disconnected: ", socket.id);
+  });
+});
+
+server.listen(port, (err) => {
+  if (err) {
+    console.log(err);
+  }
+  console.log(`server is listening on port ${port}`);
+});
 
 /* ************************************************************************* */
 

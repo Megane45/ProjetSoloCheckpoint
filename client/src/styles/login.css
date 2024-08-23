@@ -31,7 +31,7 @@
 }
 
 .input-group label {
-  color: #fff;
+  color: #000000;
   font-size: 1.2rem;
 }
 
@@ -43,13 +43,6 @@
   border-radius: 5px;
   border: none;
 }
-
-.input-group input[type="email"],
-.input-group input[type="password"] {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-}
-
 .login-button {
   width: 100%;
   padding: 15px;
@@ -64,6 +57,7 @@
 
 .login-button:hover {
   background-color: rgba(0, 0, 0, 0.9);
+  color: white;
 }
 
 .popup-content {

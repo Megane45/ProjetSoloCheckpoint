@@ -3,6 +3,7 @@ import connexion from "../services/connexion";
 import { useLogin } from "../context/LoginContext";
 import "../styles/character-form.css";
 import DiceSet from "./Dices";
+import Socketio from "./Socketio";
 
 function CharacterForm() {
   const { user } = useLogin();
@@ -183,6 +184,7 @@ function CharacterForm() {
         {success && <p className="success-message">{success}</p>}
       </div>
       <DiceSet />;
+      <Socketio />
     </div>
   );
 }

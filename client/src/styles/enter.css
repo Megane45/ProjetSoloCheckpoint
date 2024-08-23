@@ -55,6 +55,7 @@
 
 .button:hover {
   background: #e68900;
+  color: white; /* Met le texte en blanc lors du survol */
 }
 
 .button:active {

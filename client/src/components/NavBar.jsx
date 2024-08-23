@@ -27,7 +27,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="navbar-title">
+      <Link to="/matchmaking" className="navbar-title">
         Batailles Et Beignets
       </Link>
       <div className="navbar-buttons">

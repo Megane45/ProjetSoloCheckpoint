@@ -61,6 +61,7 @@ button:disabled {
 
 button:hover:not(:disabled) {
   background-color: #000000;
+  color: white;
 }
 
 .matchmaking-wrapper {

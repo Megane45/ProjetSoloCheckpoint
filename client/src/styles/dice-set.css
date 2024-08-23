@@ -1,24 +1,35 @@
 .dice-container {
   display: flex;
+  flex-direction: row; /* Dispose les dés horizontalement */
+  justify-content: center; /* Centre les dés horizontalement */
   margin-bottom: 20px;
-  flex-direction: column;
-  align-items: flex-start;
+  gap: 20px; /* Espacement entre les dés */
 }
 
 .dice-image {
   cursor: pointer;
   width: 100px;
   height: 100px;
-  margin: 0 10px;
-  transition: transform 0.2s ease;
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée pour donner du relief */
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease; /* Transition pour l'effet de survol */
+}
+
+.dice-image:hover {
+  transform: scale(1.1); /* Agrandissement au survol */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée au survol */
 }
 
 .dice-image:active {
-  transform: scale(0.9);
+  transform: scale(0.9); /* Réduction au clic */
 }
 
 .message {
   font-size: 24px;
-  margin-top: 10px;
-  color: white;
+  margin-top: 20px; /* Espacement plus large au-dessus du message */
+  color: #f0f0f0; /* Couleur de texte claire pour contraster avec le fond */
+  text-align: center; /* Centrer le texte */
+  font-family: "Arial", sans-serif; /* Police simple et moderne */
 }

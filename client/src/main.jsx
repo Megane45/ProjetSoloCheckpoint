@@ -31,20 +31,19 @@ const router = createBrowserRouter([
         path: "/matchmaking/:id",
         element: <CharacterForm />,
       },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
+        path: "/profil",
+        element: <Profil />,
+      },
     ],
-  },
-
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
-  {
-    path: "/profil",
-    element: <Profil />,
   },
 ]);
 
