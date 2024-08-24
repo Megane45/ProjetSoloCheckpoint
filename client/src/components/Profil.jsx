@@ -4,43 +4,71 @@ import { useLogin } from "../context/LoginContext";
 import Modal from "./modal";
 import "../styles/profil.css";
 
+// Fonction pour sauvegarder les informations du profil dans le local storage
+const saveProfileToLocalStorage = (profile) => {
+  localStorage.setItem("userProfile", JSON.stringify(profile));
+};
+
+// Fonction pour charger les informations du profil depuis le local storage
+const loadProfileFromLocalStorage = () => {
+  const profile = localStorage.getItem("userProfile");
+  return profile ? JSON.parse(profile) : null;
+};
+
 function Profil() {
   const { user } = useLogin();
   const [userProfil, setUserProfil] = useState({
     pseudo: "",
     email: "",
+    profileImage: "", // Nouvelle propriété pour l'image de profil
   });
   const [gameProfil, setGameProfil] = useState([]);
   const [characterProfil, setCharacterProfil] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [imagePreview, setImagePreview] = useState(null); // Prévisualisation de l'image
+  const [imageFile, setImageFile] = useState(null); // Fichier d'image à télécharger
 
   useEffect(() => {
     const id = user.userId;
-    connexion
-      .get(`api/profil/user/${id}`)
-      .then((response) => {
-        setUserProfil(response.data);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération du profil :", error);
-      });
+
+    // Charger les informations depuis le local storage
+    const storedProfile = loadProfileFromLocalStorage();
+    if (storedProfile) {
+      setUserProfil(storedProfile);
+    } else {
+      // Si les informations ne sont pas dans le local storage, les récupérer depuis l'API
+      connexion
+        .get(`api/profil/user/${id}`)
+        .then((response) => {
+          setUserProfil(response.data);
+          saveProfileToLocalStorage(response.data); // Sauvegarder dans le local storage
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la récupération du profil :", error);
+        });
+    }
+
     connexion
       .get(`api/profil/games/${id}`)
       .then((response) => {
         setGameProfil(response.data);
       })
       .catch((error) => {
-        console.error("Erreur lors de la récupération du profil :", error);
+        console.error("Erreur lors de la récupération des jeux :", error);
       });
+
     connexion
       .get(`api/profil/character/${id}`)
       .then((response) => {
         setCharacterProfil(response.data);
       })
       .catch((error) => {
-        console.error("Erreur lors de la récupération du profil :", error);
+        console.error(
+          "Erreur lors de la récupération des personnages :",
+          error
+        );
       });
   }, [user.userId]);
 
@@ -84,10 +112,68 @@ function Profil() {
     setShowModal(false);
   };
 
+  // Gestion de l'upload de l'image
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setImageFile(file);
+
+    // Prévisualisation de l'image
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSaveImage = () => {
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append("profileImage", imageFile);
+
+      connexion
+        .post("api/profil/updateImage", formData)
+        .then((response) => {
+          // Mettre à jour le profil avec la nouvelle image
+          const updatedProfile = {
+            ...userProfil,
+            profileImage: response.data.profileImage,
+          };
+          setUserProfil(updatedProfile);
+          // Sauvegarder les modifications dans le local storage
+          saveProfileToLocalStorage(updatedProfile);
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la sauvegarde de l'image :", error);
+        });
+    }
+  };
+
   return (
     <div className="profil-container">
       <h1>Profil de {userProfil.pseudo}</h1>
       <p>Email : {userProfil.email}</p>
+
+      <div className="profile-image-section">
+        <h2>Image de profil</h2>
+        {userProfil.profileImage ? (
+          <img
+            src={userProfil.profileImage}
+            alt="Profil"
+            className="profile-image"
+          />
+        ) : (
+          <p>Aucune image de profil</p>
+        )}
+        <input type="file" accept="image/*" onChange={handleImageUpload} />
+        {imagePreview && (
+          <div className="image-preview">
+            <img src={imagePreview} alt="Aperçu" className="preview-image" />
+            <button type="button" onClick={handleSaveImage}>
+              Sauvegarder l'image
+            </button>
+          </div>
+        )}
+      </div>
 
       <h2>Personnages créés</h2>
       <ul>

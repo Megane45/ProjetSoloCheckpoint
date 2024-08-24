@@ -82,22 +82,33 @@ function SpellList({ characterId }) {
   };
 
   return (
-    <div>
+    <div className="spells-component">
       <h2>Liste des sorts</h2>
+      <table className="spells-table">
+        <thead>
+          <tr>
+            <th>Nom Du sort</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {spells.map((spell) => (
+            <tr key={spell.id}>
+              <td>{spell.spell_title}</td>
+              <td>{spell.spell_description}</td>
+              <td>
+                <button type="button" onClick={() => openEditModal(spell)}>
+                  Éditer
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <button type="button" onClick={openAddModal}>
         Ajouter un sort
       </button>
-      <ul>
-        {spells.map((spell) => (
-          <li key={spell.id}>
-            <h3>{spell.spell_title}</h3>
-            <p>{spell.spell_description}</p>
-            <button type="button" onClick={() => openEditModal(spell)}>
-              Éditer
-            </button>
-          </li>
-        ))}
-      </ul>
       <ModalSpells
         isOpen={isModalOpen}
         onClose={() => {

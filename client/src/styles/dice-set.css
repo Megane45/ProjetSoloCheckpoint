@@ -1,8 +1,10 @@
+.dice-box-container {
+  max-height: 10%;
+}
 .dice-container {
   display: flex;
   flex-direction: row; /* Dispose les dés horizontalement */
-  justify-content: center; /* Centre les dés horizontalement */
-  margin-bottom: 20px;
+  justify-content: space-evenly; /* Centre les dés horizontalement */
   gap: 20px; /* Espacement entre les dés */
 }
 
@@ -27,9 +29,31 @@
 }
 
 .message {
+  background-color: #e68900;
   font-size: 24px;
   margin-top: 20px; /* Espacement plus large au-dessus du message */
   color: #f0f0f0; /* Couleur de texte claire pour contraster avec le fond */
   text-align: center; /* Centrer le texte */
   font-family: "Arial", sans-serif; /* Police simple et moderne */
+}
+@media (max-width: 390px) {
+  .dice-box-container {
+    max-height: auto; /* Permet à la boîte de contenir le contenu sans restriction de hauteur */
+  }
+
+  .dice-container {
+    flex-direction: column; /* Dispose les dés verticalement */
+    align-items: center; /* Centre les dés verticalement */
+    gap: 10px; /* Réduit l'espacement entre les dés */
+  }
+
+  .dice-image {
+    width: 80px; /* Réduit la largeur des dés */
+    height: 80px; /* Réduit la hauteur des dés */
+  }
+
+  .message {
+    font-size: 18px; /* Réduit la taille de la police pour les petits écrans */
+    margin-top: 15px; /* Réduit l'espacement au-dessus du message */
+  }
 }

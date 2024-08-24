@@ -82,27 +82,33 @@ function CharacterForm() {
   const maxStatValue = 20;
 
   return (
-    <div className="signup-container">
-      <div className="signup-box">
-        <h2 className="signup-title">Formulaire de personnage</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-input-group">
-            <label htmlFor="name">Nom:</label>
+    <div className="character-form-container">
+      <div className="character-form-box">
+        <h2 className="character-form-title">Formulaire de personnage</h2>
+        <form onSubmit={handleSubmit} className="character-form">
+          <div className="character-form-group">
+            <label htmlFor="name" className="character-form-label">
+              Nom:
+            </label>
             <input
               type="text"
               id="name"
               name="name"
               value={character.name || ""}
               onChange={handleChange}
+              className="character-form-input"
             />
           </div>
-          <div className="form-input-group">
-            <label htmlFor="race">Race:</label>
+          <div className="character-form-group">
+            <label htmlFor="race" className="character-form-label">
+              Race:
+            </label>
             <select
               id="race"
               name="race"
               value={character.race || ""}
               onChange={handleChange}
+              className="character-form-select"
             >
               <option value="">Sélectionner une race</option>
               <option value="human">Humain</option>
@@ -113,14 +119,16 @@ function CharacterForm() {
           </div>
 
           <div className="stat-distribution">
-            <p>Points restants : {pointsLeft}</p>
+            <p className="stat-distribution-text">
+              Points restants : {pointsLeft}
+            </p>
             {Object.keys(character.stats).map((statName) => {
               const statValue = character.stats[statName] || 0;
 
               return (
                 <div key={statName} className="stat-input-group">
-                  <label htmlFor={statName}>
-                    {statName.replace("stat_", "")} ({statValue})
+                  <label htmlFor={statName} className="stat-label">
+                    {statName.replace("stat_", "").toUpperCase()} ({statValue})
                   </label>
                   <input
                     type="range"
@@ -130,14 +138,17 @@ function CharacterForm() {
                     max={maxStatValue}
                     value={statValue}
                     onChange={handleStatChange}
+                    className="stat-input"
                   />
                 </div>
               );
             })}
           </div>
 
-          <div className="form-input-group">
-            <label htmlFor="pv">PV:</label>
+          <div className="character-form-group">
+            <label htmlFor="pv" className="character-form-label">
+              PV:
+            </label>
             <input
               type="number"
               id="pv"
@@ -146,11 +157,14 @@ function CharacterForm() {
               onChange={handleChange}
               min="0"
               max="10000"
+              className="character-form-input"
             />
           </div>
 
-          <div className="form-input-group">
-            <label htmlFor="mana">Mana:</label>
+          <div className="character-form-group">
+            <label htmlFor="mana" className="character-form-label">
+              Mana:
+            </label>
             <input
               type="number"
               id="mana"
@@ -159,16 +173,20 @@ function CharacterForm() {
               onChange={handleChange}
               min="0"
               max="10000"
+              className="character-form-input"
             />
           </div>
 
-          <div className="form-input-group">
-            <label htmlFor="status">Statut:</label>
+          <div className="character-form-group">
+            <label htmlFor="status" className="character-form-label">
+              Statut:
+            </label>
             <select
               id="status"
               name="status"
               value={character.status || ""}
               onChange={handleChange}
+              className="character-form-select"
             >
               <option value="">Sélectionner un statut</option>
               <option value="vivant">Vivant</option>
@@ -176,8 +194,8 @@ function CharacterForm() {
             </select>
           </div>
 
-          <div className="register-button">
-            <button type="submit" className="button">
+          <div className="character-form-submit">
+            <button type="submit" className="submit-button">
               Enregistrer
             </button>
           </div>
@@ -186,11 +204,11 @@ function CharacterForm() {
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
       </div>
-      <DiceSet />;
-      <Socketio />
+      <DiceSet className="dice-set" />
       {character.createdCharacterID > -1 && (
         <Spells characterId={character.createdCharacterID} />
       )}
+      <Socketio className="socketio-component" />
     </div>
   );
 }

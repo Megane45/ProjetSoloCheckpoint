@@ -1,12 +1,22 @@
 /* Modal.css */
-
+.spells-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+  width: 100%;
+  padding: 40px;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,4 +46,42 @@
 
 .modal-content button {
   margin-right: 10px;
+}
+.spells-table {
+  width: 100%;
+  margin: 1.5rem 0rem;
+}
+@media (max-width: 390px) {
+  .spells-component {
+    padding: 20px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .modal-content label {
+    font-size: 0.9rem;
+  }
+
+  .modal-content input,
+  .modal-content textarea {
+    font-size: 0.9rem;
+  }
+
+  .modal-content button {
+    display: block;
+    width: 100%;
+    margin: 10px 0 0;
+    padding: 10px;
+  }
+
+  .spells-table {
+    margin: 1rem 0;
+  }
 }

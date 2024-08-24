@@ -78,7 +78,7 @@ function DiceSet() {
   }
 
   return (
-    <div className="container">
+    <div className="dice-box-container">
       <div className="dice-container">
         <Dice sides={6} image={D6} onClick={rollDice} />
         <Dice sides={12} image={D12} onClick={rollDice} />

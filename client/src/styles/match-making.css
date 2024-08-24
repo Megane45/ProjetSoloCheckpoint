@@ -130,7 +130,7 @@ button:hover:not(:disabled) {
 
 /* Styles pour les boutons */
 .modal button {
-  width: 100%; /* Occupe toute la largeur disponible */
+  width: 100%;
   box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur */
   padding: 10px;
   border: none;

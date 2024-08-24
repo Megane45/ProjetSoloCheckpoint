@@ -76,7 +76,7 @@ function Socketio() {
           </p>
         ))}
       </div>
-      <form onSubmit={handleSubmit}>
+      <form className="Send-box-form" onSubmit={handleSubmit}>
         <input
           className="socket-message"
           type="text"

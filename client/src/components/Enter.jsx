@@ -8,10 +8,10 @@ function Enter() {
     navigate("/matchmaking"); // Redirection vers la page /matchmaking
   };
   return (
-    <div className="page-container">
-      <div className="content">
+    <div className="enter-page-container">
+      <div className="enter-content-wrapper">
         <motion.h1
-          className="title"
+          className="enter-title-heading"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -19,7 +19,7 @@ function Enter() {
           Bienvenue dans le Monde des Jeux de Rôle !
         </motion.h1>
         <motion.h2
-          className="subtitle"
+          className="enter-subtitle-heading"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
@@ -27,7 +27,7 @@ function Enter() {
           Vivez des aventures épiques et créez votre propre légende
         </motion.h2>
         <motion.button
-          className="button"
+          className="enter-action-button"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={handleButtonClick}

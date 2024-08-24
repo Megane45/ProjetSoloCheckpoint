@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
-.page-container {
+
+.enter-page-container {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -7,7 +8,7 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  overflow: hidden; /* Assure que rien dépasse du conteneur */
+  overflow: hidden; /* Assure que rien ne dépasse du conteneur */
 }
 
 .background-image {
@@ -20,7 +21,7 @@
   z-index: -1; /* Place l'image en arrière-plan */
 }
 
-.content {
+.enter-content-wrapper {
   position: relative;
   z-index: 1; /* Place le contenu au-dessus de l'image */
   color: white;
@@ -28,20 +29,20 @@
   font-family: "Arial", sans-serif;
 }
 
-.title {
+.enter-title-heading {
   font-size: 4rem;
   margin: 0;
   color: white;
   font-family: "Cinzel", serif;
 }
 
-.subtitle {
+.enter-subtitle-heading {
   font-size: 2rem;
   margin: 0;
   margin-top: 20px;
 }
 
-.button {
+.enter-action-button {
   margin-top: 30px;
   padding: 10px 20px;
   font-size: 1.2rem;
@@ -53,15 +54,16 @@
   transition: background 0.3s;
 }
 
-.button:hover {
+.enter-action-button:hover {
   background: #e68900;
   color: white; /* Met le texte en blanc lors du survol */
 }
 
-.button:active {
+.enter-action-button:active {
   background: #d47a00;
 }
-.title,
-.subtitle {
+
+.enter-title-heading,
+.enter-subtitle-heading {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 1); /* Ombre portée pour améliorer la lisibilité */
 }
