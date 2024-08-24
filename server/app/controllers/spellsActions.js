@@ -21,8 +21,8 @@ const create = async (req, res, next) => {
     const spells = req.body;
 
     // Create a new character entry in the database
-    const createdSpells = await tables.spells.create(spells);
-    const fusion = { ...spells, createdSpells };
+    const id = await tables.spells.create(spells);
+    const fusion = { ...spells, id };
     // Respond with HTTP 201 (Created) since the creation was successful
     res.status(201).json(fusion);
   } catch (err) {
@@ -78,21 +78,20 @@ const read = async (req, res) => {
 // // The E of BREAD - Edit (Update) operation
 // // This operation is not yet implemented
 
-// const update = async (req, res, next) => {
-//   // Extract the user data from the request body and params
-//   const userId = { ...req.body, id: req.params.id };
+const update = async (req, res, next) => {
+  // Extract spell data from the request body and attach the id from the route parameters
 
-//   try {
-//     // Update the user in the database
-//     await tables.user.update(userId);
+  try {
+    // Update the spell in the database
+    await tables.spells.update(req.body);
 
-//     // Respond with HTTP 204 (No Content)
-//     res.sendStatus(204);
-//   } catch (err) {
-//     // Pass any errors to the error-handling middleware
-//     next(err);
-//   }
-// };
+    // Respond with HTTP 204 (No Content) to indicate successful update
+    res.status(200).json(req.body);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
 
 /** 
 // The D of BREAD - Destroy (Delete) operation
@@ -125,6 +124,6 @@ module.exports = {
   browse,
   // login,
   create,
-  // update,
+  update,
   read,
 };

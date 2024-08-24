@@ -64,4 +64,4 @@ FOREIGN KEY (owner) REFERENCES users(id);
 
 ALTER TABLE spell
 ADD CONSTRAINT fk_character 
-FOREIGN KEY (character_id) REFERENCES characters(id);
+FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE;

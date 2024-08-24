@@ -1,14 +1,28 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
+
+import { useState, useEffect } from "react";
 import "../styles/modal-spells.css";
 
-// Modal component
-// eslint-disable-next-line react/prop-types
-function ModalSpells({ isOpen, onClose, onSave }) {
+function ModalSpells({ isOpen, onClose, onSave, spell }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  useEffect(() => {
+    if (spell) {
+      setTitle(spell.spell_title);
+      setDescription(spell.spell_description);
+    } else {
+      setTitle("");
+      setDescription("");
+    }
+  }, [spell]);
+
   const handleSave = () => {
-    onSave({ title, description });
+    if (spell) {
+      onSave({ id: spell.id, title, description });
+    } else {
+      onSave({ title, description });
+    }
     setTitle("");
     setDescription("");
   };
@@ -18,7 +32,7 @@ function ModalSpells({ isOpen, onClose, onSave }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Ajouter un nouveau sort</h2>
+        <h2>{spell ? "Modifier le sort" : "Ajouter un nouveau sort"}</h2>
         <label>
           Titre:
           <input

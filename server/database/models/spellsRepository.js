@@ -12,8 +12,13 @@ class SpellsRepository extends AbstractRepository {
   async create(spells) {
     // Execute the SQL INSERT query to add a new user to the "user" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (spell_title, spell_description, character_id) values (?, ?, ?)`,
-      [spells.spell_title, spells.spell_description, spells.character_id]
+      `insert into ${this.table} (id, spell_title, spell_description, character_id) values (?, ?, ?, ?)`,
+      [
+        spells.id,
+        spells.spell_title,
+        spells.spell_description,
+        spells.character_id,
+      ]
     );
 
     // Return the ID of the newly inserted user
@@ -47,20 +52,21 @@ class SpellsRepository extends AbstractRepository {
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing user
 
-  /** 
-  async update(user) {
-    // Execute the SQL UPDATE query to update a specific category
-    const [result] = await this.database.query(
-      `update ${this.table} set pseudo = ?, email = ? where id = ?`,
-      [user.pseudo, user.email, user.id]
-    );
-
-    // Return how many rows were affected
-    return result.affectedRows;
+  async update(spells) {
+    try {
+      // Execute the SQL UPDATE query to update a specific category
+      const [result] = await this.database.query(
+        `UPDATE ${this.table} SET spell_title = ?, spell_description = ? WHERE id = ?`,
+        [spells.spell_title, spells.spell_description, spells.id]
+      );
+      // Return the number of affected rows
+      return result.affectedRows;
+    } catch (error) {
+      // Handle errors here (log, rethrow, etc.)
+      console.error("Error updating spell:", error);
+      throw error; // Optionally, rethrow the error for the caller to handle
+    }
   }
-  //   ...
-  // }
-*/
 }
 
 module.exports = SpellsRepository;

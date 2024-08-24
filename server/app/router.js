@@ -62,6 +62,8 @@ router.post("/addspells", spellsActions.create);
 
 router.get("/spells/:id", spellsActions.read);
 
+router.put("/spells", spellsActions.update);
+
 /* ************************************************************************* */
 
 module.exports = router;

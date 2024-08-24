@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 // Import access to database tables
+const nodemailer = require("nodemailer");
 const tables = require("../../database/tables");
 
 // The B of BREAD - Browse (Read All) operation
@@ -30,6 +32,7 @@ const login = async (req, res, next) => {
     next(err);
   }
 };
+
 const read = async (req, res) => {
   try {
     const user = await tables.user.readById(req.params.id);
@@ -52,7 +55,26 @@ const create = async (req, res, next) => {
   try {
     // Insert the item into the database
     const insertId = await tables.user.create(users);
-
+    const transporter = nodemailer.createTransport({
+      port: 465, // true for 465, false for other ports
+      host: "smtp.gmail.com",
+      auth: {
+        user: "bataillesbeignets@gmail.com",
+        pass: "hnvf fqic ssbj sysd",
+      },
+      secure: true,
+    });
+    const mailData = {
+      from: "bataillesbeignets@gmail.com", // sender address
+      to: users.email, // list of receivers
+      subject: "Sending Email using Node.js",
+      text: "That was easy!",
+      html: "<b>Hey Gamers! </b> <br> Bienvenue sur Batailles et Beignets <br/>",
+    };
+    transporter.sendMail(mailData, (err, info) => {
+      if (err) console.log(err);
+      else console.log(info);
+    });
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
   } catch (err) {
