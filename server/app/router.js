@@ -40,6 +40,8 @@ router.post("/login", userActions.login);
 
 router.post("/signup", userActions.create);
 
+router.delete("/users/:id", userActions.destroy);
+
 const charactersActions = require("./controllers/charactersActions");
 
 router.get("/characters", charactersActions.browse);

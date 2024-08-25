@@ -20,11 +20,14 @@ const browse = async (req, res) => {
 const login = async (req, res, next) => {
   try {
     const user = await tables.user.readByEmail(req.body.email);
-
     if (user == null) {
       res.sendStatus(403);
     } else if (req.body.password === user.password) {
-      res.status(200).json({ connected: true, userId: user.id });
+      res.status(200).json({
+        connected: true,
+        userId: user.id,
+        role: user.role, // Ajoutez le rôle ici
+      });
     } else {
       res.sendStatus(403);
     }
@@ -101,7 +104,6 @@ const update = async (req, res, next) => {
   }
 };
 
-/** 
 // The D of BREAD - Destroy (Delete) operation
 // This operation is not yet implemented
 
@@ -125,7 +127,6 @@ const destroy = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-*/
 
 // Ready to export the controller functions
 module.exports = {
@@ -134,4 +135,5 @@ module.exports = {
   create,
   update,
   read,
+  destroy,
 };

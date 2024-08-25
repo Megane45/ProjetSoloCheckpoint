@@ -9,12 +9,6 @@ const saveProfileToLocalStorage = (profile) => {
   localStorage.setItem("userProfile", JSON.stringify(profile));
 };
 
-// Fonction pour charger les informations du profil depuis le local storage
-const loadProfileFromLocalStorage = () => {
-  const profile = localStorage.getItem("userProfile");
-  return profile ? JSON.parse(profile) : null;
-};
-
 function Profil() {
   const { user } = useLogin();
   const [userProfil, setUserProfil] = useState({
@@ -24,32 +18,33 @@ function Profil() {
   });
   const [gameProfil, setGameProfil] = useState([]);
   const [characterProfil, setCharacterProfil] = useState([]);
-
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
   const [imagePreview, setImagePreview] = useState(null); // Prévisualisation de l'image
   const [imageFile, setImageFile] = useState(null); // Fichier d'image à télécharger
 
   useEffect(() => {
-    const id = user.userId;
+    const { id } = user;
 
-    // Charger les informations depuis le local storage
-    const storedProfile = loadProfileFromLocalStorage();
-    if (storedProfile) {
-      setUserProfil(storedProfile);
-    } else {
-      // Si les informations ne sont pas dans le local storage, les récupérer depuis l'API
-      connexion
-        .get(`api/profil/user/${id}`)
-        .then((response) => {
-          setUserProfil(response.data);
-          saveProfileToLocalStorage(response.data); // Sauvegarder dans le local storage
-        })
-        .catch((error) => {
-          console.error("Erreur lors de la récupération du profil :", error);
-        });
+    if (!id) {
+      console.error("User ID is not defined");
+      return;
     }
+    // Vider les données du profil quand l'utilisateur change
+    localStorage.removeItem("userProfile");
 
+    // Fetch user profile
+    connexion
+      .get(`api/profil/user/${id}`)
+      .then((response) => {
+        setUserProfil(response.data);
+        saveProfileToLocalStorage(response.data); // Sauvegarder dans le local storage
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération du profil :", error);
+      });
+
+    // Fetch user games
     connexion
       .get(`api/profil/games/${id}`)
       .then((response) => {
@@ -59,6 +54,7 @@ function Profil() {
         console.error("Erreur lors de la récupération des jeux :", error);
       });
 
+    // Fetch user characters
     connexion
       .get(`api/profil/character/${id}`)
       .then((response) => {
@@ -70,6 +66,7 @@ function Profil() {
           error
         );
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.userId]);
 
   const handleDeleteGame = (gameID) => {

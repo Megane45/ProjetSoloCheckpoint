@@ -25,10 +25,18 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await connexion.post("/api/login", connect);
-      setUser(user.data);
+      const response = await connexion.post("/api/login", connect);
+      const user = response.data;
+      setUser({
+        id: user.userId,
+        role: user.role,
+      });
       localStorage.setItem("isLoggedIn", "true");
-      navigate("/");
+      if (user.role === "admin") {
+        navigate("/admin/users");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error("There was an error connecting the user!", error);
       setConnect({ email: "", password: "" });

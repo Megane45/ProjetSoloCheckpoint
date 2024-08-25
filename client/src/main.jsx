@@ -12,6 +12,8 @@ import Enter from "./components/Enter";
 import Signup from "./components/Signup";
 import CharacterForm from "./components/CharacterForm";
 import Profil from "./components/Profil";
+import Admin from "./pages/Layout/Admin";
+import User from "./pages/adminInterface/User";
 import "./App.css";
 
 const router = createBrowserRouter([
@@ -42,6 +44,16 @@ const router = createBrowserRouter([
       {
         path: "/profil",
         element: <Profil />,
+      },
+    ],
+  },
+  {
+    path: "/admin/",
+    element: <Admin />,
+    children: [
+      {
+        path: "users",
+        element: <User />,
       },
     ],
   },
