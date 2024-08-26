@@ -65,7 +65,7 @@ function CharacterForm() {
     }
     const characterToSubmit = {
       ...character,
-      user_id: user.userId,
+      user_id: user.id,
     };
     try {
       await connexion

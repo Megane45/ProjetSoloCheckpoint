@@ -59,7 +59,7 @@ function MatchMaking() {
         title: newGameTitle,
         player_ingame: 1, // Include the creator as a player
         player_max: newGameMaxPlayers,
-        owner: user.userId,
+        owner: user.id,
         // Assign the user ID as the owner of the game
       })
       .then(() => {
