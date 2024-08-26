@@ -15,7 +15,7 @@ function MatchMaking() {
   const { user } = useLogin();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const getGames = () => {
     connexion
       .get("api/games")
       .then((response) => {
@@ -24,6 +24,9 @@ function MatchMaking() {
       .catch((error) => {
         console.error("There was an error fetching the games!", error);
       });
+  };
+  useEffect(() => {
+    getGames();
   }, []);
 
   const handleJoinGame = (id) => {
@@ -45,7 +48,7 @@ function MatchMaking() {
   };
 
   const handleCreateGame = () => {
-    if (!user.userId) {
+    if (!user.id) {
       // eslint-disable-next-line no-alert
       alert("You must be logged in to create a game.");
       return;
@@ -59,9 +62,8 @@ function MatchMaking() {
         owner: user.userId,
         // Assign the user ID as the owner of the game
       })
-      .then(() => connexion.get("api/games"))
-      .then((response) => {
-        setGames(response.data);
+      .then(() => {
+        getGames();
         setIsModalOpen(false);
         setNewGameTitle("");
         setNewGameMaxPlayers(2);

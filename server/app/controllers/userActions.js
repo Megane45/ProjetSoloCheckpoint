@@ -63,7 +63,7 @@ const create = async (req, res, next) => {
       host: "smtp.gmail.com",
       auth: {
         user: "bataillesbeignets@gmail.com",
-        pass: "hnvf fqic ssbj sysd",
+        pass: process.env.APP_SECRET,
       },
       secure: true,
     });
